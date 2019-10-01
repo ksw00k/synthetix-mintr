@@ -3,50 +3,45 @@ import styled from 'styled-components';
 
 import { PLarge } from '../Typography';
 
-const LanguageDropdown = () => {
+const LedgerDerivationDropdown = () => {
   return (
     <Wrapper>
-      <Languages>
-        {['English', 'French'].map(language => {
+      <Paths>
+        {['Derivation Path 1', 'Derivation Path 2'].map(path => {
           return (
-            <LanguageElement
-              key={language}
-              onClick={() => console.log(language)}
-            >
-              <LanguageImage
-                src={`/images/languages/${language}.svg`}
-              ></LanguageImage>
-              <PLarge>{language}</PLarge>
-            </LanguageElement>
+            <PathElement key={path} onClick={() => console.log(path)}>
+              <PLarge>{path}</PLarge>
+            </PathElement>
           );
         })}
-      </Languages>
+      </Paths>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   margin-top: 16px;
-  padding: 8px;
+  width: 300px;
+  padding: 16px;
   background-color: ${props => props.theme.colorStyles.panels};
   border: 1px solid ${props => props.theme.colorStyles.borders};
   box-shadow: 0px 5px 10px 5px ${props => props.theme.colorStyles.shadow1};
   border-radius: 5px;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   position: absolute;
   z-index: 1;
 `;
 
-const Languages = styled.ul`
+const Paths = styled.ul`
   padding: 0;
   margin: 0;
+  width: 100%;
 `;
 
-const LanguageElement = styled.li`
-  padding: 16px;
+const PathElement = styled.li`
+  padding: 4px 0 0 16px;
   display: flex;
   align-items: center;
   border-radius: 2px;
@@ -57,9 +52,4 @@ const LanguageElement = styled.li`
   }
 `;
 
-const LanguageImage = styled.img`
-  height: 24px;
-  margin-right: 16px;
-`;
-
-export default LanguageDropdown;
+export default LedgerDerivationDropdown;

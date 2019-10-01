@@ -5,6 +5,8 @@ const TOGGLE_DASHBOARD_IS_LOADING = 'UI/TOGGLE_DASHBOARD_IS_LOADING';
 const TOGGLE_TRANSACTION_SETTINGS_POPUP =
   'UI/TOGGLE_TRANSACTION_SETTINGS_POPUP';
 const TOGGLE_LANGUAGE_DROPDOWN = 'UI/TOGGLE_LANGUAGE_DROPDOWN';
+const TOGGLE_LEDGER_DERIVATION_DROPDOWN =
+  'UI/TOGGLE_LEDGER_DERIVATION_DROPDOWN';
 
 // Reducer
 export default (state, action) => {
@@ -28,6 +30,9 @@ export default (state, action) => {
     }
     case TOGGLE_LANGUAGE_DROPDOWN: {
       return { ...state, languageDropdownIsVisible: action.payload };
+    }
+    case TOGGLE_LEDGER_DERIVATION_DROPDOWN: {
+      return { ...state, ledgerDerivationDropdownIsVisible: action.payload };
     }
     default:
       return state;
@@ -73,6 +78,13 @@ export const toggleTransactionSettingsPopup = (isVisible, dispatch) => {
 export const toggleLanguageDropdown = (isVisible, dispatch) => {
   return dispatch({
     type: TOGGLE_LANGUAGE_DROPDOWN,
+    payload: isVisible,
+  });
+};
+
+export const toggleLedgerDerivationDropdown = (isVisible, dispatch) => {
+  return dispatch({
+    type: TOGGLE_LEDGER_DERIVATION_DROPDOWN,
     payload: isVisible,
   });
 };

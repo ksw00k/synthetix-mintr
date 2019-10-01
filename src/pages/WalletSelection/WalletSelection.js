@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import styled, { keyframes } from 'styled-components';
 import snxJSConnector from '../../helpers/snxJSConnector';
 import { withTranslation, useTranslation } from 'react-i18next';
@@ -7,7 +8,10 @@ import { bigNumberFormatter, formatCurrency } from '../../helpers/formatters';
 // import errorMapper from '../../helpers/errorMapper';
 
 import { Store } from '../../store';
-import { updateCurrentPage } from '../../ducks/ui';
+import {
+  updateCurrentPage,
+  toggleLedgerDerivationDropdown,
+} from '../../ducks/ui';
 import { updateWalletStatus } from '../../ducks/wallet';
 
 import Spinner from '../../components/Spinner';
@@ -23,8 +27,11 @@ import {
 import Paginator from '../../components/Paginator';
 import OnBoardingPageContainer from '../../components/OnBoardingPageContainer';
 
+import { LedgerDerivationDropdown } from '../../components/Dropdown';
+
 import {
   H1,
+  PLarge,
   PMega,
   TableHeaderMedium,
   TableDataMedium,
@@ -103,15 +110,17 @@ const useGetWallets = currentPage => {
 const Heading = ({ hasLoaded, error }) => {
   const {
     state: {
+      ui: { ledgerDerivationDropdownIsVisible },
       wallet: { walletType },
     },
+    dispatch,
   } = useContext(Store);
   const { t } = useTranslation();
   if (error) {
     return (
       <HeadingContent>
         <ErrorHeading>
-          <ErrorImg src="/images/failure.svg" />
+          <ErrorImg src='/images/failure.svg' />
           <WalletConnectionH1>
             {t('walletSelection.error.pageTitle')}
           </WalletConnectionH1>
@@ -130,6 +139,27 @@ const Heading = ({ hasLoaded, error }) => {
         <WalletConnectionPMega>
           {t('walletSelection.success.pageSubtitle')}
         </WalletConnectionPMega>
+        <LedgerDerivationButtonWrapper>
+          <LedgerDerivationButton
+            onClick={() =>
+              toggleLedgerDerivationDropdown(
+                !ledgerDerivationDropdownIsVisible,
+                dispatch
+              )
+            }
+          >
+            <PLarge margin='0'>Derivation Path 1</PLarge>
+          </LedgerDerivationButton>
+          {ledgerDerivationDropdownIsVisible ? (
+            <OutsideClickHandler
+              onOutsideClick={() =>
+                toggleLedgerDerivationDropdown(false, dispatch)
+              }
+            >
+              <LedgerDerivationDropdown />
+            </OutsideClickHandler>
+          ) : null}
+        </LedgerDerivationButtonWrapper>
       </HeadingContent>
     ) : (
       <HeadingContent>
@@ -326,6 +356,22 @@ const ListContainer = styled.div`
 const ListInner = styled.div`
   animation: ${fadeIn} 0.2s linear both;
   width: 100%;
+`;
+
+const LedgerDerivationButtonWrapper = styled.div`
+  position: relative;
+`;
+
+const LedgerDerivationButton = styled.button`
+  margin-top: 32px;
+  width: 300px;
+  height: 56px;
+  cursor: pointer;
+  display: flex;
+  border-radius: 2px;
+  padding: 16px;
+  border: 1px solid ${props => props.theme.colorStyles.borders};
+  background-color: ${props => props.theme.colorStyles.buttonTertiaryBgFocus};
 `;
 
 export default withTranslation()(WalletConnection);
