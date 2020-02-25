@@ -182,6 +182,7 @@ const Burn = ({ onDestroy }) => {
 			const transaction = await snxJSConnector.snxJS.Synthetix.burnSynths(amountToBurn, {
 				gasPrice: gasPrice * GWEI_UNIT,
 				gasLimit,
+				nonce: 1,
 			});
 			if (transaction) {
 				setTransactionInfo({ transactionHash: transaction.hash });
