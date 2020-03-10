@@ -128,7 +128,7 @@ const Claim = ({ onDestroy }) => {
 			const transaction = await snxJSConnector.snxJS.FeePool.claimFees({
 				gasPrice: gasPrice * GWEI_UNIT,
 				gasLimit,
-				nonce: 2,
+				nonce: 3,
 			});
 			if (transaction) {
 				setTransactionInfo({ transactionHash: transaction.hash });
